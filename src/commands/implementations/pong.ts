@@ -4,22 +4,22 @@ import {
   InteractionResponse,
   SlashCommandBuilder,
 } from "discord.js";
-import { SlashCommandRegistry } from "../../registry/slash-command-registry";
-import { DiscordSlashCommand } from "../discord-slash-command";
+import { DiscordSlashCommand } from "../../model/commands/discord-slash-command";
+import { SlashCommandRegistry } from "../../model/registry/slash-command-registry";
 
 @SlashCommandRegistry.register
-export class Ping implements DiscordSlashCommand {
+export class Pong implements DiscordSlashCommand {
   public data: SlashCommandBuilder;
 
   constructor() {
     this.data = new SlashCommandBuilder()
-      .setName("ping")
-      .setDescription("Replies with Pong!");
+      .setName("pong")
+      .setDescription("Replies with Ping!");
   }
 
   public execute(
     interaction: ChatInputCommandInteraction<CacheType>,
   ): Promise<InteractionResponse<boolean>> {
-    return interaction.reply("Pong!");
+    return interaction.reply("Ping!");
   }
 }

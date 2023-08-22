@@ -1,12 +1,7 @@
 import { RESTPostAPIChatInputApplicationCommandsJSONBody } from "discord.js";
 import { DiscordSlashCommand } from "../commands/discord-slash-command";
+import { DecoratorContxt } from "../decorator-contxt";
 import { Optional } from "../optional/optional";
-
-interface DecoratorContxt {
-  kind: string;
-  name: string | undefined;
-  addInitializer(initializer: () => void): void;
-}
 
 type Constructor<T> = {
   new (): T;

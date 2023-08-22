@@ -4,7 +4,7 @@ import {
   Routes,
 } from "discord.js";
 import "dotenv/config";
-import "./model/commands";
+import "./commands";
 import { SlashCommandRegistry } from "./model/registry/slash-command-registry";
 
 const rest: REST = new REST().setToken(process.env.DISCORD_TOKEN);
