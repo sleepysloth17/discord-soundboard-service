@@ -1,0 +1,32 @@
+{
+  "name": "soundboard-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --watch src/**/*.ts --exec ts-node src/index.ts",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier . --write",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.ts": "eslint --cache --fix",
+    "*.{ts,json}": "prettier --write"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.5.2",
+    "@typescript-eslint/eslint-plugin": "^6.4.1",
+    "@typescript-eslint/parser": "^6.4.1",
+    "eslint": "^8.47.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1",
+    "nodemon": "^3.0.1",
+    "prettier": "3.0.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  }
+}
