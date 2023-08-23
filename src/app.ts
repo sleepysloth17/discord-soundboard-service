@@ -11,8 +11,11 @@ const app: Express = express();
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
-  voiceService.playAudio("censor-beep.mp3");
-  // discordService.sendMessage("Hello World!");
+});
+
+app.post("/soundboard/:name", (req, res) => {
+  voiceService.playAudio(req.params.name);
+  res.send(`Triggered audio playback of ${req.params.name}`);
 });
 
 app.listen(port, () => {
