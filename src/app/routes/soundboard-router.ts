@@ -18,7 +18,7 @@ soundboardRouter.get("/", (req, res) => {
     );
 });
 
-soundboardRouter.put("/stop", (req, res) => {
+soundboardRouter.post("/stop", (req, res) => {
   voiceService
     .stop()
     .then((stopped: boolean) =>
