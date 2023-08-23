@@ -1,12 +1,7 @@
 // https://stackoverflow.com/questions/41580798/how-to-play-audio-file-into-channel
 
-import {
-  AudioResource,
-  createAudioResource,
-  getVoiceConnection,
-} from "@discordjs/voice";
+import { createAudioResource, getVoiceConnection } from "@discordjs/voice";
 import { VoiceBasedChannel } from "discord.js";
-import { join } from "path";
 import { BehaviorSubject, filter, firstValueFrom, map, take } from "rxjs";
 import { VoiceConnectionComponent } from "../components/voice-connection-component";
 import { Singleton } from "../model/services/singleton";
@@ -80,7 +75,7 @@ export class VoiceService {
   /**
    * Play the given audio in the current connection, if one exists, else do nothing.
    */
-  public playAudio(name: string): Promise<boolean> {
+  public playAudio(path: string): Promise<boolean> {
     return firstValueFrom(
       this.connectionSubject.pipe(
         take(1),
@@ -90,13 +85,23 @@ export class VoiceService {
             return false;
           }
 
-          console.log(`Playing ${name} in channel ${connection.channel.name}`);
-          const resource: AudioResource = createAudioResource(
-            join(__dirname, name),
-            {},
-          );
-          connection.play(resource);
+          console.log(`Playing ${path} in channel ${connection.channel.name}`);
+          connection.play(createAudioResource(path, {}));
           return true;
+        }),
+      ),
+    );
+  }
+
+  /**
+   * @returns true if will stop, else false
+   */
+  public stop(): Promise<boolean> {
+    return firstValueFrom(
+      this.connectionSubject.pipe(
+        take(1),
+        map((connection: VoiceConnectionComponent) => {
+          return !!connection?.stop();
         }),
       ),
     );
