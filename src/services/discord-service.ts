@@ -18,7 +18,10 @@ export class DiscordService {
   private messageCreateSubject: Subject<Message<boolean>> = new Subject();
   private interactionCreateSubject: Subject<Interaction<CacheType>> =
     new Subject();
-  private voiceStateSubject: Subject<VoiceState> = new Subject();
+  private voiceStateSubject: Subject<{
+    oldState: VoiceState;
+    newState: VoiceState;
+  }> = new Subject();
 
   constructor(private readonly client: Client) {
     client.once(Events.ClientReady, (c: Client<true>) =>
@@ -28,8 +31,14 @@ export class DiscordService {
     client.on(Events.InteractionCreate, (v) =>
       this.interactionCreateSubject.next(v),
     );
-    client.on(Events.VoiceStateUpdate, (v) => this.voiceStateSubject.next(v));
-    client.login(DiscordService.DISCORD_TOKEN);
+    client.on(Events.VoiceStateUpdate, (oldState, newState) =>
+      this.voiceStateSubject.next({ oldState, newState }),
+    );
+  }
+
+  // To get around the register commands script from causing a login event
+  public login(): void {
+    this.client.login(DiscordService.DISCORD_TOKEN);
   }
 
   public onMessage(): Observable<Message<boolean>> {
@@ -40,7 +49,10 @@ export class DiscordService {
     return this.interactionCreateSubject;
   }
 
-  public onVoiceState(): Observable<VoiceState> {
+  public onVoiceState(): Observable<{
+    oldState: VoiceState;
+    newState: VoiceState;
+  }> {
     return this.voiceStateSubject;
   }
 

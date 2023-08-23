@@ -1,4 +1,4 @@
-import { VoiceConnection, joinVoiceChannel } from "@discordjs/voice";
+import { AudioResource, createAudioResource } from "@discordjs/voice";
 import {
   CacheType,
   ChatInputCommandInteraction,
@@ -8,7 +8,9 @@ import {
   SlashCommandBuilder,
   VoiceBasedChannel,
 } from "discord.js";
+import { join } from "node:path";
 import { first } from "rxjs";
+import { VoiceConnectionComponent } from "../../components/voice-connection-component";
 import { DiscordSlashCommand } from "../../model/commands/discord-slash-command";
 import { Optional } from "../../model/optional/optional";
 import { SlashCommandRegistry } from "../../model/registry/slash-command-registry";
@@ -67,23 +69,28 @@ export class InitialiseSoundboard implements DiscordSlashCommand {
     member: GuildMember,
     channel: VoiceBasedChannel,
   ): InteractionReplyOptions {
-    const connection: VoiceConnection = joinVoiceChannel({
-      channelId: channel.id,
-      guildId: channel.guild.id,
-      adapterCreator: channel.guild.voiceAdapterCreator,
-    });
+    const connect: VoiceConnectionComponent =
+      VoiceConnectionComponent.createInChannel(channel);
+    const resource: AudioResource = createAudioResource(
+      join(__dirname, "censor-beep.mp3"),
+      {},
+    );
+
+    connect.play(resource);
 
     discordService
       .onVoiceState()
       .pipe(
         first(
-          (voiceState) =>
-            voiceState.channelId == channel.id &&
-            voiceState.member.id == member.id,
+          ({ oldState, newState }) =>
+            oldState.member.id == member.id &&
+            oldState.channelId == channel.id &&
+            newState.channelId != oldState.channelId,
         ),
       )
       .subscribe(() => {
-        connection.destroy();
+        // TODO - make sure this happens at some point if for whatever reason the bot doens't leave
+        connect.destroy();
       });
 
     return {

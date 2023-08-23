@@ -4,6 +4,9 @@ import "./commands";
 import { SlashCommandRegistry } from "./model/registry/slash-command-registry";
 import discordService from "./services/discord-service";
 
+// console.log(generateDependencyReport());
+
+discordService.login();
 discordService
   .onInteraction()
   .subscribe((interaction: Interaction<CacheType>) => {
