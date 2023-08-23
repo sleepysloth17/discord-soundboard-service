@@ -2,7 +2,7 @@ import { CacheType, Interaction } from "discord.js";
 import "dotenv/config";
 import express, { Express } from "express";
 import "./commands";
-import { SlashCommandRegistry } from "./model/registry/slash-command-registry";
+import { SlashCommandRegistry } from "./commands/slash-command-registry";
 import soundboardRouter from "./routes/soundboard-router";
 import discordService from "./services/discord-service";
 

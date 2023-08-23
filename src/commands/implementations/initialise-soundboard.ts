@@ -8,11 +8,11 @@ import {
   VoiceBasedChannel,
 } from "discord.js";
 import { first } from "rxjs";
-import { DiscordSlashCommand } from "../../model/commands/discord-slash-command";
-import { Optional } from "../../model/optional/optional";
-import { SlashCommandRegistry } from "../../model/registry/slash-command-registry";
 import discordService from "../../services/discord-service";
 import audioService from "../../services/voice/voice-service";
+import { Optional } from "../../utils/optional";
+import { DiscordSlashCommand } from "../discord-slash-command";
+import { SlashCommandRegistry } from "../slash-command-registry";
 
 // TODO - maybe factory that takes the args to pass into teh construtor so I can pass discordService?
 // TODO - note that it currently initialises discord when I, say, register everything.

@@ -1,4 +1,4 @@
-import { Optional } from "../optional/optional";
+import { Optional } from "./optional";
 
 export class UUID {
   private static readonly UUID_REGEX: RegExp =

@@ -1,6 +1,6 @@
 import { join } from "path";
-import { Optional } from "../../../model/optional/optional";
-import { UUID } from "../../../model/uuid/uuid";
+import { Optional } from "../../../utils/optional";
+import { UUID } from "../../../utils/uuid";
 import { SoundboardItem } from "../soundboard-item";
 import { SoundboardItemService } from "../soundboard-item-service";
 

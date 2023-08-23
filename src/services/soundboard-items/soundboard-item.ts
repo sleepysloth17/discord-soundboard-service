@@ -1,4 +1,4 @@
-import { UUID } from "../../model/uuid/uuid";
+import { UUID } from "../../utils/uuid";
 
 export interface SoundboardItem {
   id: UUID;

@@ -10,7 +10,7 @@ import {
   VoiceState,
 } from "discord.js";
 import { Observable, Subject } from "rxjs";
-import { Singleton } from "../model/services/singleton";
+import { Singleton } from "../utils/annotations/singleton";
 
 @Singleton
 export class DiscordService {

@@ -1,5 +1,5 @@
-import { Optional } from "../../model/optional/optional";
-import { UUID } from "../../model/uuid/uuid";
+import { Optional } from "../../utils/optional";
+import { UUID } from "../../utils/uuid";
 import { SoundboardItem } from "./soundboard-item";
 
 export interface SoundboardItemService {

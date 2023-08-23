@@ -4,8 +4,8 @@ import {
   InteractionResponse,
   SlashCommandBuilder,
 } from "discord.js";
-import { DiscordSlashCommand } from "../../model/commands/discord-slash-command";
-import { SlashCommandRegistry } from "../../model/registry/slash-command-registry";
+import { DiscordSlashCommand } from "../discord-slash-command";
+import { SlashCommandRegistry } from "../slash-command-registry";
 
 @SlashCommandRegistry.register
 export class Ping implements DiscordSlashCommand {

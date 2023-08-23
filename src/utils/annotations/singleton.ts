@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DecoratorContxt } from "../decorator-contxt";
+import { DecoratorContxt } from "./decorator-contxt";
 
 type Constructor<T> = {
   new (...args: unknown[]): T;
