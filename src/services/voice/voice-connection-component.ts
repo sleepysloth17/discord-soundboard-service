@@ -75,6 +75,7 @@ export class VoiceConnectionComponent {
   }
 
   public stop(): boolean {
+    console.log("Stopping currently playing track");
     return this.player.stop();
   }
 

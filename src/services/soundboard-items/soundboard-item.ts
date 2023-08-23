@@ -1,7 +1,8 @@
-import { UUID } from "../model/uuid/uuid";
+import { UUID } from "../../model/uuid/uuid";
 
 export interface SoundboardItem {
   id: UUID;
+  // volume: number // TODO - work out what type and set!
   icon: string;
   name: string;
   path: string;

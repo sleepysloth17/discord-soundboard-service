@@ -12,7 +12,7 @@ import { DiscordSlashCommand } from "../../model/commands/discord-slash-command"
 import { Optional } from "../../model/optional/optional";
 import { SlashCommandRegistry } from "../../model/registry/slash-command-registry";
 import discordService from "../../services/discord-service";
-import audioService from "../../services/voice-service";
+import audioService from "../../services/voice/voice-service";
 
 // TODO - maybe factory that takes the args to pass into teh construtor so I can pass discordService?
 // TODO - note that it currently initialises discord when I, say, register everything.

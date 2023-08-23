@@ -1,17 +1,14 @@
 import * as fs from "fs";
 import { join } from "node:path";
-import {
-  SoundboardItem,
-  deserialiseSoundboardItems,
-} from "../../../components/soundboard-item";
 import { Optional } from "../../../model/optional/optional";
 import { UUID } from "../../../model/uuid/uuid";
+import { SoundboardItem, deserialiseSoundboardItems } from "../soundboard-item";
 import { SoundboardItemService } from "../soundboard-item-service";
 
 export class JsonSoundboardItemService implements SoundboardItemService {
   private static readonly JSON_LOCATION: string = join(
     __dirname,
-    "./sound-database.json",
+    "../../../assets/sound-database.json",
   );
 
   private readonly items: Record<string, SoundboardItem> = {};

@@ -1,11 +1,11 @@
 import { Router } from "express";
+import { UUID } from "../model/uuid/uuid";
 import {
   SoundboardItem,
   serialiseSoundboardItems,
-} from "../components/soundboard-item";
-import { UUID } from "../model/uuid/uuid";
+} from "../services/soundboard-items/soundboard-item";
 import soundboardService from "../services/soundboard-service";
-import voiceService from "../services/voice-service";
+import voiceService from "../services/voice/voice-service";
 
 const soundboardRouter = Router();
 

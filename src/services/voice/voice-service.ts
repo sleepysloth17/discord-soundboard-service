@@ -3,8 +3,8 @@
 import { createAudioResource, getVoiceConnection } from "@discordjs/voice";
 import { VoiceBasedChannel } from "discord.js";
 import { BehaviorSubject, filter, firstValueFrom, map, take } from "rxjs";
-import { VoiceConnectionComponent } from "../components/voice-connection-component";
-import { Singleton } from "../model/services/singleton";
+import { Singleton } from "../../model/services/singleton";
+import { VoiceConnectionComponent } from "./voice-connection-component";
 
 interface IDestroy {
   destroy(): void;

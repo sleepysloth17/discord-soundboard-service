@@ -1,9 +1,9 @@
-import { SoundboardItem } from "../components/soundboard-item";
 import { Optional } from "../model/optional/optional";
 import { UUID } from "../model/uuid/uuid";
-import { SoundboardItemService } from "./soundboard/soundboard-item-service";
-import { SoundboardItemServiceProvider } from "./soundboard/soundboard-item-service-provider";
-import voiceService, { VoiceService } from "./voice-service";
+import { SoundboardItem } from "./soundboard-items/soundboard-item";
+import { SoundboardItemService } from "./soundboard-items/soundboard-item-service";
+import { SoundboardItemServiceProvider } from "./soundboard-items/soundboard-item-service-provider";
+import voiceService, { VoiceService } from "./voice/voice-service";
 
 export class SoundboardService {
   constructor(
