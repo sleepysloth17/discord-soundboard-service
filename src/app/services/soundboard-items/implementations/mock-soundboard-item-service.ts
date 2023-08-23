@@ -1,4 +1,3 @@
-import { join } from "path";
 import { Optional } from "../../../utils/optional";
 import { UUID } from "../../../utils/uuid";
 import { SoundboardItem } from "../soundboard-item";
@@ -9,7 +8,7 @@ export class MockSoundboardItemService implements SoundboardItemService {
     id: UUID.of("16161c71-3f5b-40e9-896e-fdaad4f83ee9").get(),
     icon: "📯",
     name: "Curb your enthusiasm",
-    path: join(__dirname, "../../../assets/audio/curb.mp3"),
+    path: "http://localhost:3000/assets/curb.mp3",
   };
 
   public getItem(id: UUID): Promise<Optional<SoundboardItem>> {

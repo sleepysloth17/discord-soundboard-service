@@ -3,12 +3,12 @@
     "id": "16161c71-3f5b-40e9-896e-fdaad4f83ee9",
     "icon": "📯",
     "name": "Curb your enthusiasm",
-    "path": "D:\\Projects\\projects\\discord-bot\\soundboard\\soundboard-service\\src\\assets\\audio\\curb.mp3"
+    "path": "http://localhost:3000/assets/curb.mp3"
   },
   {
     "id": "c8baa1db-7a94-4653-b0f0-1cb1d92e82ab",
     "icon": "❗",
     "name": "Censorship Beep",
-    "path": "D:\\Projects\\projects\\discord-bot\\soundboard\\soundboard-service\\src\\assets\\audio\\censor-beep.mp3"
+    "path": "http://localhost:3000/assets/censor-beep.mp3"
   }
 ]

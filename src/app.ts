@@ -1,6 +1,7 @@
 import { CacheType, Interaction } from "discord.js";
 import "dotenv/config";
 import express, { Express } from "express";
+import path from "path";
 import "./app/commands";
 import { SlashCommandRegistry } from "./app/commands/model/slash-command-registry";
 import soundboardRouter from "./app/routes/soundboard-router";
@@ -15,6 +16,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/soundboard", soundboardRouter);
+app.use("/assets", express.static(path.join(__dirname, "./assets/audio"))); // https://expressjs.com/en/starter/static-files.html
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}, logging into discord`);
