@@ -1,11 +1,13 @@
 import {
   CacheType,
+  Channel,
   Client,
   Events,
   GatewayIntentBits,
   Guild,
   Interaction,
   Message,
+  TextChannel,
   VoiceState,
 } from "discord.js";
 import { Observable, Subject } from "rxjs";
@@ -25,7 +27,7 @@ export class DiscordService {
 
   constructor(private readonly client: Client) {
     client.once(Events.ClientReady, (c: Client<true>) =>
-      console.log(`Ready! Logged in as ${c.user.tag}`),
+      console.log(`Discord service ready! Logged in as ${c.user.tag}`),
     );
     client.on(Events.MessageCreate, (v) => this.messageCreateSubject.next(v));
     client.on(Events.InteractionCreate, (v) =>
@@ -58,6 +60,14 @@ export class DiscordService {
 
   public getGuild(guildId: string): Promise<Guild> {
     return this.client.guilds.fetch(guildId);
+  }
+
+  public sendMessage(message: string): void {
+    const channel: Channel =
+      this.client.channels.cache.get("831958831042658307");
+    if (channel instanceof TextChannel) {
+      channel.send(message);
+    }
   }
 }
 

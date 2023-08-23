@@ -1,17 +1,30 @@
 import { CacheType, Interaction } from "discord.js";
 import "dotenv/config";
+import express, { Express } from "express";
 import "./commands";
 import { SlashCommandRegistry } from "./model/registry/slash-command-registry";
 import discordService from "./services/discord-service";
 
-// console.log(generateDependencyReport());
+const port: number = parseInt(process.env.SERVER_PORT);
+const app: Express = express();
 
-discordService.login();
-discordService
-  .onInteraction()
-  .subscribe((interaction: Interaction<CacheType>) => {
-    if (!interaction.isChatInputCommand()) return;
-    SlashCommandRegistry.getCommandWithName(interaction.commandName).ifPresent(
-      (cmd) => cmd.execute(interaction),
-    );
-  });
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+  discordService.sendMessage("Hello World!");
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}, logging into discord`);
+
+  discordService.login();
+  discordService
+    .onInteraction()
+    .subscribe((interaction: Interaction<CacheType>) => {
+      if (!interaction.isChatInputCommand()) return;
+      SlashCommandRegistry.getCommandWithName(
+        interaction.commandName,
+      ).ifPresent((cmd) => cmd.execute(interaction));
+    });
+});
+
+// console.log(generateDependencyReport());
