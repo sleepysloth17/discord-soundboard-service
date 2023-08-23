@@ -7,7 +7,7 @@ import {
 } from "@discordjs/voice";
 import { VoiceBasedChannel } from "discord.js";
 import { join } from "path";
-import { BehaviorSubject, Observable, filter, map, take } from "rxjs";
+import { BehaviorSubject, filter, firstValueFrom, map, take } from "rxjs";
 import { VoiceConnectionComponent } from "../components/voice-connection-component";
 import { Singleton } from "../model/services/singleton";
 
@@ -31,19 +31,21 @@ export class VoiceService {
    *
    * @returns {boolean} whether or not a new connection was established
    */
-  public connect(channel: VoiceBasedChannel): Observable<boolean> {
-    return this.connectionSubject.pipe(
-      take(1),
-      map((currentConnection: VoiceConnectionComponent) => {
-        if (currentConnection?.channel.id != channel.id) {
-          this.handleReconnection(
-            currentConnection ?? getVoiceConnection(channel.guildId),
-            channel,
-          );
-          return true;
-        }
-        return false;
-      }),
+  public connect(channel: VoiceBasedChannel): Promise<boolean> {
+    return firstValueFrom(
+      this.connectionSubject.pipe(
+        take(1),
+        map((currentConnection: VoiceConnectionComponent) => {
+          if (currentConnection?.channel.id != channel.id) {
+            this.handleReconnection(
+              currentConnection ?? getVoiceConnection(channel.guildId),
+              channel,
+            );
+            return true;
+          }
+          return false;
+        }),
+      ),
     );
   }
 
@@ -78,17 +80,26 @@ export class VoiceService {
   /**
    * Play the given audio in the current connection, if one exists, else do nothing.
    */
-  public playAudio(name: string): void {
-    this.connectionSubject
-      .pipe(take(1), filter(Boolean))
-      .subscribe((connection: VoiceConnectionComponent) => {
-        console.log(`Playing ${name} in channel ${connection.channel.name}`);
-        const resource: AudioResource = createAudioResource(
-          join(__dirname, name),
-          {},
-        );
-        connection.play(resource);
-      });
+  public playAudio(name: string): Promise<boolean> {
+    return firstValueFrom(
+      this.connectionSubject.pipe(
+        take(1),
+        map((connection: VoiceConnectionComponent) => {
+          if (!connection) {
+            console.log("No connection exists, playback failed");
+            return false;
+          }
+
+          console.log(`Playing ${name} in channel ${connection.channel.name}`);
+          const resource: AudioResource = createAudioResource(
+            join(__dirname, name),
+            {},
+          );
+          connection.play(resource);
+          return true;
+        }),
+      ),
+    );
   }
 }
 

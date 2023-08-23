@@ -7,12 +7,12 @@ import {
   SlashCommandBuilder,
   VoiceBasedChannel,
 } from "discord.js";
-import { filter, first } from "rxjs";
+import { first } from "rxjs";
 import { DiscordSlashCommand } from "../../model/commands/discord-slash-command";
 import { Optional } from "../../model/optional/optional";
 import { SlashCommandRegistry } from "../../model/registry/slash-command-registry";
-import audioService from "../../services/audio-service";
 import discordService from "../../services/discord-service";
+import audioService from "../../services/voice-service";
 
 // TODO - maybe factory that takes the args to pass into teh construtor so I can pass discordService?
 // TODO - note that it currently initialises discord when I, say, register everything.
@@ -67,23 +67,24 @@ export class InitialiseSoundboard implements DiscordSlashCommand {
     member: GuildMember,
     channel: VoiceBasedChannel,
   ): InteractionReplyOptions {
-    audioService
-      .connect(channel)
-      .pipe(filter(Boolean))
-      .subscribe(() => {
-        console.log(`Listening for user leaving channel: ${channel.name}`);
-        discordService
-          .onVoiceState()
-          .pipe(
-            first(
-              ({ oldState, newState }) =>
-                oldState.member.id == member.id &&
-                oldState.channelId == channel.id &&
-                newState.channelId != oldState.channelId,
-            ),
-          )
-          .subscribe(() => audioService.disconnect());
-      });
+    audioService.connect(channel).then((newConnectionCreated: boolean) => {
+      if (!newConnectionCreated) {
+        return;
+      }
+
+      console.log(`Listening for user leaving channel: ${channel.name}`);
+      discordService
+        .onVoiceState()
+        .pipe(
+          first(
+            ({ oldState, newState }) =>
+              oldState.member.id == member.id &&
+              oldState.channelId == channel.id &&
+              newState.channelId != oldState.channelId,
+          ),
+        )
+        .subscribe(() => audioService.disconnect());
+    });
     return {
       content: `Soundboard invited to ${channel.name}`,
       ephemeral: true,
