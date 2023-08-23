@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "register-commands": "ts-node src/register-commands.ts",
+    "register-commands": "ts-node src/assets/scripts/register-commands.ts",
     "dev": "nodemon --watch src/**/*.{ts,json} --exec ts-node src/app.ts",
     "lint": "eslint src/**/*.ts",
     "format": "prettier . --write",

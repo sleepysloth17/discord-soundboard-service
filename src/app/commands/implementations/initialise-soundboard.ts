@@ -11,8 +11,8 @@ import { first } from "rxjs";
 import discordService from "../../services/discord-service";
 import audioService from "../../services/voice/voice-service";
 import { Optional } from "../../utils/optional";
-import { DiscordSlashCommand } from "../discord-slash-command";
-import { SlashCommandRegistry } from "../slash-command-registry";
+import { DiscordSlashCommand } from "../model/discord-slash-command";
+import { SlashCommandRegistry } from "../model/slash-command-registry";
 
 // TODO - maybe factory that takes the args to pass into teh construtor so I can pass discordService?
 // TODO - note that it currently initialises discord when I, say, register everything.

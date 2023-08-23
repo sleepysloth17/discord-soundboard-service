@@ -8,7 +8,7 @@ import { SoundboardItemService } from "../soundboard-item-service";
 export class JsonSoundboardItemService implements SoundboardItemService {
   private static readonly JSON_LOCATION: string = join(
     __dirname,
-    "../../../assets/sound-database.json",
+    "../../../../assets/sound-database.json",
   );
 
   private readonly items: Record<string, SoundboardItem> = {};
