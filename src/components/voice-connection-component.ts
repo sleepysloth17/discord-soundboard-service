@@ -77,6 +77,7 @@ export class VoiceConnectionComponent {
   }
 
   public destroy(): void {
+    console.log("Destroying connection");
     this.connection.destroy();
     this.playerSubscription?.unsubscribe();
   }

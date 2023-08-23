@@ -76,6 +76,7 @@ export class InitialiseSoundboard implements DiscordSlashCommand {
       {},
     );
 
+    // TODO - handle connecting multiple times to the same one
     connect.play(resource);
 
     discordService
