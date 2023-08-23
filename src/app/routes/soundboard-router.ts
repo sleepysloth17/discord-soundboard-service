@@ -18,7 +18,7 @@ soundboardRouter.get("/", (req, res) => {
     );
 });
 
-soundboardRouter.delete("/", (req, res) => {
+soundboardRouter.put("/stop", (req, res) => {
   voiceService
     .stop()
     .then((stopped: boolean) =>

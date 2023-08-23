@@ -10,17 +10,11 @@ import discordService from "./app/services/discord-service";
 const port: number = parseInt(process.env.SERVER_PORT);
 const app: Express = express();
 
-app.get("/", (req, res) => {
-  // https://expressjs.com/en/guide/using-template-engines.html
-  res.send("Hello World!");
-});
-
 app.use("/soundboard", soundboardRouter);
 app.use("/assets", express.static(path.join(__dirname, "./assets/audio"))); // https://expressjs.com/en/starter/static-files.html
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}, logging into discord`);
-
   discordService.login();
   discordService
     .onInteraction()
