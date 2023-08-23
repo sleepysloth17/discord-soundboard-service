@@ -17,7 +17,7 @@ export class Optional<T> {
     return this._value;
   }
 
-  public getOrElse(value: T): T {
+  public orElse(value: T): T {
     return this.get() || value;
   }
 
@@ -32,6 +32,17 @@ export class Optional<T> {
   public ifPresent(callback: (value: T) => void): void {
     if (this._value != null) {
       callback(this._value);
+    }
+  }
+
+  public ifPresentOrElse(
+    populatedCallback: (value: T) => void,
+    emptyCallback: () => void,
+  ): void {
+    if (this._value != null) {
+      populatedCallback(this._value);
+    } else {
+      emptyCallback();
     }
   }
 }

@@ -3,8 +3,10 @@ import {
   Client,
   Events,
   GatewayIntentBits,
+  Guild,
   Interaction,
   Message,
+  VoiceState,
 } from "discord.js";
 import { Observable, Subject } from "rxjs";
 import { Singleton } from "../model/services/singleton";
@@ -16,6 +18,7 @@ export class DiscordService {
   private messageCreateSubject: Subject<Message<boolean>> = new Subject();
   private interactionCreateSubject: Subject<Interaction<CacheType>> =
     new Subject();
+  private voiceStateSubject: Subject<VoiceState> = new Subject();
 
   constructor(private readonly client: Client) {
     client.once(Events.ClientReady, (c: Client<true>) =>
@@ -25,6 +28,7 @@ export class DiscordService {
     client.on(Events.InteractionCreate, (v) =>
       this.interactionCreateSubject.next(v),
     );
+    client.on(Events.VoiceStateUpdate, (v) => this.voiceStateSubject.next(v));
     client.login(DiscordService.DISCORD_TOKEN);
   }
 
@@ -35,14 +39,25 @@ export class DiscordService {
   public onInteraction(): Observable<Interaction<CacheType>> {
     return this.interactionCreateSubject;
   }
+
+  public onVoiceState(): Observable<VoiceState> {
+    return this.voiceStateSubject;
+  }
+
+  public getGuild(guildId: string): Promise<Guild> {
+    return this.client.guilds.fetch(guildId);
+  }
 }
 
 export default new DiscordService(
   new Client({
     intents: [
       GatewayIntentBits.Guilds,
+      // GatewayIntentBits.GuildPresences,
+      // GatewayIntentBits.GuildMembers,
       GatewayIntentBits.GuildMessages,
       GatewayIntentBits.MessageContent,
+      GatewayIntentBits.GuildVoiceStates,
     ],
   }),
 );

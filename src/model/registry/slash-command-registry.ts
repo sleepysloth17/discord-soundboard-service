@@ -4,7 +4,7 @@ import { DecoratorContxt } from "../decorator-contxt";
 import { Optional } from "../optional/optional";
 
 type Constructor<T> = {
-  new (): T;
+  new (...args: unknown[]): T;
   readonly prototype: T;
 };
 
