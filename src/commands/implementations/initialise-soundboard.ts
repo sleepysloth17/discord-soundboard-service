@@ -1,4 +1,3 @@
-import { AudioResource, createAudioResource } from "@discordjs/voice";
 import {
   CacheType,
   ChatInputCommandInteraction,
@@ -8,12 +7,12 @@ import {
   SlashCommandBuilder,
   VoiceBasedChannel,
 } from "discord.js";
-import { join } from "node:path";
 import { first } from "rxjs";
 import { VoiceConnectionComponent } from "../../components/voice-connection-component";
 import { DiscordSlashCommand } from "../../model/commands/discord-slash-command";
 import { Optional } from "../../model/optional/optional";
 import { SlashCommandRegistry } from "../../model/registry/slash-command-registry";
+import audioService from "../../services/audio-service";
 import discordService from "../../services/discord-service";
 
 // TODO - maybe factory that takes the args to pass into teh construtor so I can pass discordService?
@@ -71,13 +70,7 @@ export class InitialiseSoundboard implements DiscordSlashCommand {
   ): InteractionReplyOptions {
     const connect: VoiceConnectionComponent =
       VoiceConnectionComponent.createInChannel(channel);
-    const resource: AudioResource = createAudioResource(
-      join(__dirname, "censor-beep.mp3"),
-      {},
-    );
-
-    // TODO - handle connecting multiple times to the same one
-    connect.play(resource);
+    audioService.connect(connect);
 
     discordService
       .onVoiceState()
@@ -91,7 +84,7 @@ export class InitialiseSoundboard implements DiscordSlashCommand {
       )
       .subscribe(() => {
         // TODO - make sure this happens at some point if for whatever reason the bot doens't leave
-        connect.destroy();
+        audioService.disconnect();
       });
 
     return {

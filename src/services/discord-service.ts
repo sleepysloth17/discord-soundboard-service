@@ -8,6 +8,7 @@ import {
   Interaction,
   Message,
   TextChannel,
+  VoiceChannel,
   VoiceState,
 } from "discord.js";
 import { Observable, Subject } from "rxjs";
@@ -68,6 +69,12 @@ export class DiscordService {
     if (channel instanceof TextChannel) {
       channel.send(message);
     }
+  }
+
+  public getVoiceChannel(): VoiceChannel {
+    return this.client.channels.cache.get(
+      "1143871066792529932",
+    ) as VoiceChannel;
   }
 }
 
