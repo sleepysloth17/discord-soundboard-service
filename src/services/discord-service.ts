@@ -4,11 +4,9 @@ import {
   Client,
   Events,
   GatewayIntentBits,
-  Guild,
   Interaction,
   Message,
   TextChannel,
-  VoiceChannel,
   VoiceState,
 } from "discord.js";
 import { Observable, Subject } from "rxjs";
@@ -59,22 +57,12 @@ export class DiscordService {
     return this.voiceStateSubject;
   }
 
-  public getGuild(guildId: string): Promise<Guild> {
-    return this.client.guilds.fetch(guildId);
-  }
-
   public sendMessage(message: string): void {
     const channel: Channel =
       this.client.channels.cache.get("831958831042658307");
     if (channel instanceof TextChannel) {
       channel.send(message);
     }
-  }
-
-  public getVoiceChannel(): VoiceChannel {
-    return this.client.channels.cache.get(
-      "1143871066792529932",
-    ) as VoiceChannel;
   }
 }
 

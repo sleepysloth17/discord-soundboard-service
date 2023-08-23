@@ -7,8 +7,7 @@ import {
   SlashCommandBuilder,
   VoiceBasedChannel,
 } from "discord.js";
-import { first } from "rxjs";
-import { VoiceConnectionComponent } from "../../components/voice-connection-component";
+import { filter, first } from "rxjs";
 import { DiscordSlashCommand } from "../../model/commands/discord-slash-command";
 import { Optional } from "../../model/optional/optional";
 import { SlashCommandRegistry } from "../../model/registry/slash-command-registry";
@@ -68,25 +67,23 @@ export class InitialiseSoundboard implements DiscordSlashCommand {
     member: GuildMember,
     channel: VoiceBasedChannel,
   ): InteractionReplyOptions {
-    const connect: VoiceConnectionComponent =
-      VoiceConnectionComponent.createInChannel(channel);
-    audioService.connect(connect);
-
-    discordService
-      .onVoiceState()
-      .pipe(
-        first(
-          ({ oldState, newState }) =>
-            oldState.member.id == member.id &&
-            oldState.channelId == channel.id &&
-            newState.channelId != oldState.channelId,
-        ),
-      )
+    audioService
+      .connect(channel)
+      .pipe(filter(Boolean))
       .subscribe(() => {
-        // TODO - make sure this happens at some point if for whatever reason the bot doens't leave
-        audioService.disconnect();
+        console.log(`Listening for user leaving channel: ${channel.name}`);
+        discordService
+          .onVoiceState()
+          .pipe(
+            first(
+              ({ oldState, newState }) =>
+                oldState.member.id == member.id &&
+                oldState.channelId == channel.id &&
+                newState.channelId != oldState.channelId,
+            ),
+          )
+          .subscribe(() => audioService.disconnect());
       });
-
     return {
       content: `Soundboard invited to ${channel.name}`,
       ephemeral: true,

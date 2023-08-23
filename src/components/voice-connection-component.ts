@@ -25,6 +25,7 @@ export class VoiceConnectionComponent {
     channel: VoiceBasedChannel,
   ): VoiceConnectionComponent {
     return new VoiceConnectionComponent(
+      channel,
       joinVoiceChannel({
         channelId: channel.id,
         guildId: channel.guild.id,
@@ -39,6 +40,7 @@ export class VoiceConnectionComponent {
   private readonly playerSubscription: PlayerSubscription;
 
   private constructor(
+    public readonly channel: VoiceBasedChannel,
     private readonly connection: VoiceConnection,
     private readonly player: AudioPlayer = createAudioPlayer(),
   ) {
@@ -77,7 +79,7 @@ export class VoiceConnectionComponent {
   }
 
   public destroy(): void {
-    console.log("Destroying connection");
+    console.log(`Destorying connection to: ${this.channel.name}`);
     this.connection.destroy();
     this.playerSubscription?.unsubscribe();
   }
