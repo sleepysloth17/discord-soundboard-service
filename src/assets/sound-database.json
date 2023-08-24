@@ -10,5 +10,11 @@
     "icon": "❗",
     "name": "Censorship Beep",
     "path": "http://localhost:3000/assets/censor-beep.mp3"
+  },
+  {
+    "id": "14bc4b99-7c99-4b8d-974e-c629728247ab",
+    "icon": "💢",
+    "name": "Lemme ask you something (weeb).mov.exe",
+    "path": "http://localhost:3000/assets/watching-anime-yet.mp3"
   }
 ]
