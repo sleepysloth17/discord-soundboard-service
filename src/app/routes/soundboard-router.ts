@@ -57,15 +57,19 @@ soundboardRouter.get("/", (req, res) => {
 
 soundboardRouter.post(
   "/",
-  [validateQueryParams("icon", "name"), upload.single("file")],
+  [validateQueryParams("icon", "name"), upload.single("audioFile")],
   (req, res) => {
-    soundboardService
-      .saveItem(res.locals.id, req.query.name, req.query.icon)
-      .then(() => {
-        res.send(
-          `Saved audio with properties: {id: ${res.locals.id.value} icon: ${req.query.icon}, name: ${req.query.name}}`,
-        );
-      });
+    if (!res.locals.id) {
+      res.status(400).send("File was not uploaded");
+    } else {
+      soundboardService
+        .saveItem(res.locals.id, req.query.name, req.query.icon)
+        .then(() => {
+          res.send(
+            `Saved audio with properties: {id: ${res.locals.id.value} icon: ${req.query.icon}, name: ${req.query.name}}`,
+          );
+        });
+    }
   },
 );
 
