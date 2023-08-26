@@ -63,7 +63,7 @@ soundboardRouter.post(
       .saveItem(res.locals.id, req.query.name, req.query.icon)
       .then(() => {
         res.send(
-          `Saved audio with properties: {id: ${res.locals.id} icon: ${req.query.icon}, name: ${req.query.name}}`,
+          `Saved audio with properties: {id: ${res.locals.id.value} icon: ${req.query.icon}, name: ${req.query.name}}`,
         );
       });
   },
