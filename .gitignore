@@ -3,5 +3,5 @@ dist
 .eslintcache
 .husky
 .env
-src/assets/audio
+src/assets/audio/*
 src/assets/sound-database.json
