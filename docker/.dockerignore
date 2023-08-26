@@ -1,0 +1,12 @@
+.husky
+**/node_modules/
+**/dist
+.git
+.gitignore
+.env
+.eslintrc.json
+.eslintcache
+.prettierignore
+.prettierrc.json
+README.md
+src/assets
