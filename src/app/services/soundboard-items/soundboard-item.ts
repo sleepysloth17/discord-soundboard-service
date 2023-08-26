@@ -5,7 +5,7 @@ export interface SoundboardItem {
   // volume: number // TODO - work out what type and set!
   icon: string;
   name: string;
-  path: string;
+  path: string; // TODO - I should construct this with a uuid and save them with uuids
 }
 
 export const deserialiseSoundboardItems: (json: unknown) => SoundboardItem[] = (

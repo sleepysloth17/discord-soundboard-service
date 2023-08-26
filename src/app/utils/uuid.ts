@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import { Optional } from "./optional";
 
 export class UUID {

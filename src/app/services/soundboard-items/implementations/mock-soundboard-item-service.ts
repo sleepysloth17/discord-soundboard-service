@@ -19,4 +19,9 @@ export class MockSoundboardItemService implements SoundboardItemService {
   public getItems(): Promise<SoundboardItem[]> {
     return Promise.resolve([MockSoundboardItemService.mockItem]); // TODO
   }
+
+  public saveItem(id: UUID, name: string, icon: string): Promise<void> {
+    console.log(`Saved mocked saving to db: ${id.value}, ${name}, ${icon}`);
+    return Promise.resolve();
+  }
 }

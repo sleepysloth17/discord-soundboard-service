@@ -24,6 +24,10 @@ export class SoundboardService {
           .orElse(Promise.resolve(false)),
       );
   }
+
+  public saveItem(id: UUID, name: string, icon: string): Promise<void> {
+    return this.soundboardItemService.saveItem(id, name, icon);
+  }
 }
 
 export default new SoundboardService(
