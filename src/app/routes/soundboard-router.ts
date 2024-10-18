@@ -28,12 +28,12 @@ const validateQueryParams: (
 
 // https://medium.com/@sidharth016/uploading-files-with-nodejs-f3263b5f0cdd
 // https://stackoverflow.com/questions/25698176/how-to-set-different-destinations-in-nodejs-using-multer
-// curl -F "file=@$PWD/test-upload.txt" "http://localhost:3000/soundboard"
+// curl -F "audioFile=@$PWD/test-upload.txt" "http://localhost:3000/soundboard"
 const storage = multer.diskStorage({
   filename: function (request, file, callback) {
     const id: UUID = UUID.random();
     request.res.locals.id = id;
-    callback(null, `${id.value}.mp3`);
+    callback(null, `${id.value}.mp3`); // TODO - other formats
   },
   destination: function (request, file, callback) {
     callback(null, path.join(__dirname, "../../assets/audio"));

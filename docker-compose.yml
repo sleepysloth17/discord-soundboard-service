@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  soundboard-service:
+    build:
+      context: .
+    environment:
+      - SERVER_PORT=3000
+      - SOUNDBOARD_ITEM_SOURCE=${SOUNDBOARD_ITEM_SOURCE}
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - DISCORD_CLIENT_ID=${DISCORD_CLIENT_ID}
+      - DISCORD_GUILD_ID=${DISCORD_GUILD_ID}
+      - DISCORD_USER_ID=${DISCORD_USER_ID}

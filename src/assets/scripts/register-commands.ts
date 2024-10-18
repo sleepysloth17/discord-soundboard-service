@@ -3,11 +3,11 @@ import {
   RESTPostAPIChatInputApplicationCommandsJSONBody,
   Routes,
 } from "discord.js";
-import "dotenv/config";
 import "../../app/commands";
 import { SlashCommandRegistry } from "../../app/commands/model/slash-command-registry";
+import environment from "../../environment";
 
-const rest: REST = new REST().setToken(process.env.DISCORD_TOKEN);
+const rest: REST = new REST().setToken(environment.discordToken);
 
 (async () => {
   const body: readonly RESTPostAPIChatInputApplicationCommandsJSONBody[] =
@@ -19,8 +19,8 @@ const rest: REST = new REST().setToken(process.env.DISCORD_TOKEN);
   rest
     .put(
       Routes.applicationGuildCommands(
-        process.env.DISCORD_CLIENT_ID,
-        process.env.DISCORD_GUILD_ID,
+        environment.discordClientId,
+        environment.discordGuildId,
       ),
       { body },
     )

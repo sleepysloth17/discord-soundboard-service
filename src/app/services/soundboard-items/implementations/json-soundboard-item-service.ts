@@ -28,7 +28,6 @@ export class JsonSoundboardItemService implements SoundboardItemService {
       console.log(`Loading ${items.length} items`);
       return items.reduce(
         (map: Record<string, SoundboardItem>, current: SoundboardItem) => {
-          // console.log(current);
           map[current.id.value] = current;
           return map;
         },

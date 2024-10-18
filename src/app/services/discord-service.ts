@@ -1,20 +1,19 @@
 import {
   CacheType,
-  Channel,
   Client,
   Events,
   GatewayIntentBits,
   Interaction,
   Message,
-  TextChannel,
   VoiceState,
 } from "discord.js";
 import { Observable, Subject } from "rxjs";
+import environment from "../../environment";
 import { Singleton } from "../utils/annotations/singleton";
 
 @Singleton
 export class DiscordService {
-  private static readonly DISCORD_TOKEN: string = process.env.DISCORD_TOKEN;
+  private static readonly DISCORD_TOKEN: string = environment.discordToken;
 
   private messageCreateSubject: Subject<Message<boolean>> = new Subject();
   private interactionCreateSubject: Subject<Interaction<CacheType>> =
@@ -55,14 +54,6 @@ export class DiscordService {
     newState: VoiceState;
   }> {
     return this.voiceStateSubject;
-  }
-
-  public sendMessage(message: string): void {
-    const channel: Channel =
-      this.client.channels.cache.get("831958831042658307");
-    if (channel instanceof TextChannel) {
-      channel.send(message);
-    }
   }
 }
 

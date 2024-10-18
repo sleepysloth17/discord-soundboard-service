@@ -1,3 +1,4 @@
+import environment from "../../../environment";
 import { JsonSoundboardItemService } from "./implementations/json-soundboard-item-service";
 import { MockSoundboardItemService } from "./implementations/mock-soundboard-item-service";
 import { SoundboardItemService } from "./soundboard-item-service";
@@ -9,7 +10,7 @@ enum SoundboardItemSource {
 
 export class SoundboardItemServiceProvider {
   private static readonly SOURCE =
-    SoundboardItemSource[process.env.SOUNDBOARD_ITEM_SOURCE];
+    SoundboardItemSource[environment.soundboardItemSource];
 
   public static get(): SoundboardItemService {
     switch (SoundboardItemServiceProvider.SOURCE) {

@@ -8,6 +8,7 @@ import {
   VoiceBasedChannel,
 } from "discord.js";
 import { first } from "rxjs";
+import environment from "../../../environment";
 import discordService from "../../services/discord-service";
 import audioService from "../../services/voice/voice-service";
 import { Optional } from "../../utils/optional";
@@ -20,7 +21,7 @@ import { SlashCommandRegistry } from "../model/slash-command-registry";
 // So app.ts -> create soundboard map, register -> just get data
 @SlashCommandRegistry.register
 export class InitialiseSoundboard implements DiscordSlashCommand {
-  private static readonly ALLOWED_USER_ID: string = process.env.DISCORD_USER_ID;
+  private static readonly ALLOWED_USER_ID: string = environment.discordUserId;
 
   public data: SlashCommandBuilder;
 
